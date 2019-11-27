@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+<!--
+{% block bootstrap_link %}
+
+{% endblock %}-->
+{% block form %}
+<div class="container" style="margin-top:3rem; padding:3rem; font-size:2rem">
+    <form method="POST">{% csrf_token %}
+        <fieldset class="fieldset" style="margin:auto; padding:3rem">
+            <legend class="legend" style="margin:auto; font-size:2rem">Login</legend>
+            {{ form|crispy }}
+
+            <div class="submit">
+                <button class="btn" type="submit" style="width:250px; height:3.2rem; margin-top:3rem">Login</button>
+            </div>
+            <br>
+            <center><a href="{% url 'password_reset' %}" style="text-decoration:none">Forgot Password</a></center>
+        </fieldset>
+
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need An Account? <a href="{% url 'register' %}" class="login-link" style="text-decoration:none">Sign Up
+            Now</a>
+        </small>
+    </div>
+</div>
+{% endblock %}
+{% block register %}
+{% endblock %}

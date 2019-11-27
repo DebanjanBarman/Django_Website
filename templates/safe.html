@@ -1,0 +1,298 @@
+<!--           RENDERING ALL PG DETAILS DATA SO EDIT WITH CAUTION             -->
+
+
+{% load static %}
+{% load svg_icons %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'sass/main.css' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+
+    <title> {{ details.pgName }}</title>
+</head>
+
+<body>
+<div class="container">
+    <header class="header">
+        <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="trillo logo" class="logo"/></a>
+        <form action="{% url 'search' %}" class="search" method="POST">{% csrf_token %}
+            <!--            <input type="text" class="search__input" placeholder="Search pg"/>-->
+            <input type="text" name="q" value="{{request.GET.q}}" class="search__input" placeholder="Search pg by name, location, amount"/>
+            <button class="search__button">
+                <svg class="search__icon">
+                    {% icon 'magnifying-glass' %}
+                </svg>
+            </button>
+        </form>
+
+        <nav class="user-nav">
+            {% if user.is_authenticated %}
+            <div class="user-nav__user">
+                <span class="user-nav__user-name"><a href="{% url 'logout' %}" class="side-nav__link"
+                                                     style="color:var(--color-primary)">Logout</a> </span>
+            </div>
+            <div class="user-nav__user">
+                <a href="{% url 'profile' %}">
+                    <img src="{{ user.profile.image.url }}" alt="User" class="user-nav__user-photo"/></a>
+                <a href="{% url 'profile' %}"
+                   style="text-transform:uppercase; text-decoration:none; color:var(--color-primary)">
+                    <span class="user-nav__user-name">{{user.username}} </span>
+                </a>
+            </div>
+            {% else %}
+            <div class="user-nav__user">
+                <span class="user-nav__user-name"><a href="{% url 'login' %}" class="side-nav__link"
+                                                     style="color:var(--color-primary)">Login</a> </span>
+            </div>
+
+            <div class="user-nav__user">
+                <span class="user-nav__user-name"><a href="{% url 'register' %}" class="side-nav__link"
+                                                     style="color:var(--color-primary)">Register</a> </span>
+            </div>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="content">
+        <nav class="sidebar">
+            <ul class="side-nav">
+                <li class="side-nav__item side-nav__item--active">
+                    <a href="{% url 'home' %}" class="side-nav__link">
+                        <svg class="side-nav__icon">
+                            <i class="fa fa-home"> &nbsp;</i>
+                        </svg>
+                        <span>&nbsp; Find PG</span>
+                    </a>
+                </li>
+                <li class="side-nav__item">
+                    <a href="{% url 'pg_register' %}" class="side-nav__link">
+                        <svg class="side-nav__icon">
+                            <i class="fa fa-book"> &nbsp;</i>
+                        </svg>
+                        <span>&nbsp; Register Pg</span>
+                    </a>
+                </li>
+                <li class="side-nav__item">
+                    <a href="{% url 'contact' %}" target="_blank" class="side-nav__link">
+
+                        <svg class="side-nav__icon">
+                            <i class="fa fa-envelope"> &nbsp;</i>
+                        </svg>
+                        <span>&nbsp; Contact Us</span>
+
+                    </a>
+                </li>
+                <li class="side-nav__item">
+                    <a href="{% url 'about' %}" class="side-nav__link">
+                        <svg class="side-nav__icon">
+                            <i class="fa fa-users"> &nbsp;</i>
+                        </svg>
+                        <span>&nbsp;About Us</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="legal">
+                &copy;2019 By Debanjan. All rights reserved.
+            </div>
+        </nav>
+
+
+        <main class="hotel-view">
+            <div class="gallery">
+                <figure class="gallery__item">
+                    <img src="{{details.pgImage1.url}}" style="height:30vh; width:100%" alt="Photo"
+                         class="gallery__photo"/>
+                </figure>
+                <figure class="gallery__item">
+                    <img src="{{details.pgImage2.url}}" style="height:30vh; width:100%" alt="Photo"
+                         class="gallery__photo"/>
+                </figure>
+                <figure class="gallery__item">
+                    <img src="{{details.pgImage3.url}}" style="height:30vh; width:100%" alt="Photo"
+                         class="gallery__photo"/>
+                </figure>
+            </div>
+
+            <div class="overview">
+                <h1 class="overview__heading">
+                    {% block pg_name %}
+
+                    {{ details.pgName }}
+
+                    {% endblock %}
+
+                </h1>
+                <div class="overview__stars">
+
+                    <div style="display:flex; fill:var(--color-primary); margin:0px;">
+                        {% if details.pgRating == 1 %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% endif %}
+
+                    </div>
+
+                    <div style="display:flex; fill:var(--color-primary); margin:0px;">
+                        {% if details.pgRating == 2 %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+
+                        {% endif %}
+
+                    </div>
+
+                    <div style="display:flex; fill:var(--color-primary); margin:0px;">
+                        {% if details.pgRating == 3 %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+
+                        {% endif %}
+
+                    </div>
+
+                    <div style="display:flex; fill:var(--color-primary); margin:0px;">
+                        {% if details.pgRating == 4 %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+
+
+                        {% endif %}
+
+                    </div>
+
+                    <div style="display:flex; fill:var(--color-primary); margin:0px;">
+                        {% if details.pgRating == 5 %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% icon 'star' size=1rem className="overview__icon-star" %}
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <div class="overview__location">
+                    <svg class="overview__icon-location">
+                        {% icon 'location-pin' size=5rem %}
+                    </svg>
+                    <button class="btn-inline">{{details.pgCity}}, {{details.pgLocation}}</button>
+                </div>
+                <div class="overview__rating">
+                    <div class="overview__rating-average">{{details.pgRating}}</div>
+                    <div class="overview__rating-count">No votes</div>
+                </div>
+            </div>
+
+            <div class="detail">
+                <div class="description">
+                    <p class="paragraph">
+                        Full Address &rarr; {{details.pgAddress}}
+                    </p>
+                    <p class="paragraph">
+                        {{details.pgDescription}}
+                    </p>
+                    <p class="paragraph">
+                        {{details.pgRules}}
+                    </p>
+                    <ul class="list">
+
+                        <li class="list__item">Food &rarr; {{details.pgFood}}
+                        </li>
+                        <li class="list__item">Room &rarr; {{details.pgRoom}}
+                        </li>
+                        <li class="list__item">Bathroom &rarr;
+                            {% if details.pgBathroom == True %}
+                            Available
+                            {% else %}
+                            Not Available
+                            {% endif %}
+                        </li>
+                        <li class="list__item">WiFi &rarr;
+                            {% if details.pgWiFi == True %}
+                            Available
+                            {% else %}
+                            Not Available
+                            {% endif %}
+                        </li>
+                        <li class="list__item">Laundry &rarr;
+                            {% if details.pgLaundry == True %}
+                            Available
+                            {% else %}
+                            Not Available
+                            {% endif %}
+                        </li>
+                        <li class="list__item">Charge &rarr; {{details.pgCharge}} &nbsp;
+                            <i class="fa fa-rupee" style="font-size:1.6rem; color:var(--color-primary);"></i>&nbsp;
+                            Per Month
+                        </li>
+                        <li class="list__item">Pg For &rarr; {{details.pgFor}}
+                        </li>
+                    </ul>
+                </div>
+
+                <figure class="user-reviews">
+                    <!--                    <figure class="review">-->
+
+                    <!--                        <figcaption class="review__user">-->
+                    <!--                            <img src="{% static 'img/user-1.jpg' %}" alt="" class="review__photo"/>-->
+                    <!--                            <div class="review__user-box">-->
+                    <!--                                <p class="preview__user-name">Jonh Doe</p>-->
+                    <!--                                <p class="preview__user-date">Feb 2018</p>-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="review__rating">4</div>-->
+                    <!--                        </figcaption>-->
+                    <!--                    </figure>-->
+                    <figure class="review" style="width:100%; height:100%">
+
+                        <blockquote class="review__text">
+                            Space for Advertisement
+                        </blockquote>
+                    </figure>
+
+                    <figure class="review" style="width:100%; height:100%">
+                        <!--                        <iframe src="https://www.google.com" frameborder="0" width="100%" , height="100%">-->
+                        <!--                        </iframe>-->
+                        <blockquote class="review__text">
+                            Space for Advertisement
+                        </blockquote>
+                    </figure>
+
+
+                </figure>
+                <!--                    <button class="btn-inline">Show all <span>&rarr;</span></button>-->
+            </div>
+
+            <div class="cta">
+                <h2 class="cta__book-now">
+                    Good news! {{details.pgRoom}} rooms left
+                </h2>
+
+                <a href="apply">
+                    <button class="btn">
+                <span class="btn__visible">
+                  Apply Now
+                </span>
+                        <span class="btn__invisible">
+                Only {{details.pgRoom}} rooms left
+                </span>
+                    </button>
+                </a>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+</body>
+</html>

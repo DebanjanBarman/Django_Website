@@ -1,0 +1,102 @@
+{% extends 'base.html' %}{% load svg_icons %}
+{% block rating-icon %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block pglist %}
+{% for detail in pg_details %}
+<div class="blog-card" style="width:100%">
+    <div class="meta">
+        <div class="photo"><img src="media/{{detail.pgImage1}}" alt="{{detail.pgName}} Photo"
+                style="height:100%;width:100%;"></div>
+        <ul class="details">
+            <li><a href="pg/{{detail.id}}" style="text-decoration:none; font-weight:800">PG For {{detail.pgFor}}</a>
+            </li>
+            <li style=" font-weight:800; text-transform:capitalize;"><i class="fa fa-map-marker"
+                    style="font-size:1.5rem;" aria-hidden="true"></i>
+                &nbsp;
+                {{detail.pgAddress}}
+            </li>
+            <!--            <li class="tags">-->
+            <!--                <ul>-->
+            <!--                    <li><a href="#">{{detail.pgName}}</a></li>-->
+            <!--                    <li><a href="#">{{detail.pgName}}</a></li>-->
+            <!--                    <li><a href="#">{{detail.pgName}}</a></li>-->
+            <!--                    <li><a href="#">{{detail.pgName}}</a></li>-->
+            <!--                </ul>-->
+            <!--            </li>-->
+        </ul>
+    </div>
+    <div class="description">
+        <h1 style="text-transform:uppercase">{{detail.pgName}}</h1>
+        <h2> {{detail.pgLocation}}</h2>
+
+        <div
+            style=" text-align:center; background-color:#388e3c;color:#fff; font-size:1rem; font-weight:800;border-radius:5px; width:4rem;">
+            {{detail.pgRating}}
+            <i style="font-size:1rem" class="fa">&#xf005;</i>
+
+        </div>
+
+        <p style="color:var(--color-primary); font-weight:500; width:100%">
+            {% if detail.pgBathroom == True %}
+            Bathroom Available, &nbsp;
+            {% endif %}
+
+            {% if detail.pgWiFi == True %}
+            WiFi, &nbsp;
+            {% endif %}
+
+            {% if detail.pgLaundry == True %}
+            Laundry, &nbsp;
+            {% endif %}
+
+        </p>
+        <div style=" width:100%;">
+            <p style=" width:100%;">
+                {{detail.pgDescription}}
+            </p>
+        </div>
+
+
+        <div style=" text-align:center; width:10rem; border-radius:5px;float:left">
+            <span style="color:var(--color-primary); font-weight:800; font-size:2rem;">₹{{detail.pgCharge}}/Month</span>
+        </div>
+
+        <a href="pg/{{detail.id}}" target="_blank" style=" text-decoration:none; color:#fff;">
+            <div
+                style="background-color:blue; text-align:center; font-weight:800; width:10rem; border-radius:5px;float:right; margin-top:.8rem;">
+                Details
+            </div>
+
+        </a>
+
+    </div>
+</div>
+
+{% endfor %}
+
+{% if is_paginated %}
+<div class="center">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a class="" href="?page=1">First</a>
+        <a class="" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <a class="active" href="?page={{ num }}">{{num}}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+        <a class="" href="?page={{ num }}">{{num}}</a>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <a class="" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+</ul>
+
+{% endblock %}

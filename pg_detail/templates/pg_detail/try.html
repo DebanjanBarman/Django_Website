@@ -1,0 +1,63 @@
+{% extends 'safe.html' %}
+
+<!--{% block name %}-->
+<!--<div class="flip-card">-->
+<!--    <div class="flip-card-inner">-->
+<!--        <div class="flip-card-front">-->
+<!--            <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">-->
+<!--        </div>-->
+<!--        <div class="flip-card-back">-->
+<!--            <h1>John Doe</h1>-->
+<!--            <p>Architect & Engineer</p>-->
+<!--            <p>We love that guy</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+{% endblock %}
+
+<!--&lt;!&ndash;// Rating star&ndash;&gt;-->
+<!--{% block star %}-->
+<!--    {% for i in rate %}-->
+<!--        <svg class="overview__icon-star">-->
+
+<!--        </svg>-->
+<!--    {% endfor %}-->
+
+<!--{% endblock %}-->
+
+
+{% block user %}
+{% if User.is_authenticated %}
+
+<nav class="user-nav">
+    <div class="user-nav__icon-box">
+        <svg class="user-nav__icon">
+            {% icon 'bookmark' %}
+        </svg>
+        <span class="user-nav__notification">7</span>
+    </div>
+    <div class="user-nav__icon-box">
+        <svg class="user-nav__icon">
+            {% icon 'chat' %}
+        </svg>
+        <span class="user-nav__notification">11</span>
+    </div>
+
+    <div class="user-nav__user">
+        <img src="{% static 'img/user.jpg' %}" alt="User" class="user-nav__user-photo"/>
+        <span class="user-nav__user-name">Debanjan</span>
+    </div>
+</nav>
+{% endif %}
+
+<nav class="user-nav">
+
+    <div class="user-nav__user">
+        <img src="{% static 'img/user.jpg' %}" alt="User" class="user-nav__user-photo"/>
+        <span class="user-nav__user-name">Login/ Sign up</span>
+    </div>
+</nav>
+
+
+{% endblock %}

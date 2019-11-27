@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block bootstrap_link %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% endblock %}
+{% block form %}
+<div class="container" style="margin-top:3rem;font-size:2rem">
+    <form method="POST">{% csrf_token %}
+        <fieldset class="fieldset" style="margin:auto; padding:3rem">
+            <legend class="legend" style="margin:auto; font-size:2rem">Sign Up</legend>
+            {{ form|crispy }}
+
+            <div class="submit">
+                <button class="btn" type="submit" style="width:250px; height:3.2rem; margin-top:3rem">Sign Up</button>
+            </div>
+        </fieldset>
+
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Already Have An Account? <a href="{% url 'login' %}" class="login-link">Login</a>
+        </small>
+    </div>
+</div>
+{% endblock %}
+{% block login %}
+{% endblock %}

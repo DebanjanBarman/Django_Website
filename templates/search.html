@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block search %}
+{% if context %}
+
+<ul>
+    {% for detail in context %}
+    <div class="blog-card">
+        <div class="meta">
+            <div class="photo"><img src="/media/{{detail.pgImage1}}" alt="{{detail.pgName}} Photo"
+                                    style="height:100%;width:100%;"></div>
+            <ul class="details">
+                <li><a href="/pg/{{detail.id}}" style="text-decoration:none; font-weight:800">PG For
+                    {{detail.pgFor}}</a>
+                </li>
+                <li style=" font-weight:800; text-transform:capitalize;">
+                    <i class="fa fa-map-marker" style="font-size:1.5rem;" aria-hidden="true"></i>&nbsp;
+                    {{detail.pgAddress}}
+                </li>
+            </ul>
+        </div>
+        <div class="description">
+            <h1 style="text-transform:uppercase">{{detail.pgName}}</h1>
+            <h2> {{detail.pgLocation}}</h2>
+
+            <div style=" text-align:center; background-color:#388e3c;color:#fff; font-size:1rem; font-weight:800;border-radius:5px; width:4rem;">
+                {{detail.pgRating}}
+                <i style="font-size:1rem" class="fa">&#xf005;</i>
+
+            </div>
+
+            <p style="color:var(--color-primary); font-weight:500; width:100%">
+                {% if detail.pgBathroom == True %}
+                Bathroom, &nbsp;
+                {% endif %}
+
+                {% if detail.pgWiFi == True %}
+                WiFi, &nbsp;
+                {% endif %}
+
+                {% if detail.pgLaundry == True %}
+                Laundry, &nbsp;
+                {% endif %}
+
+            </p>
+            <div style=" width:100%;">
+                <p style=" width:100%;">
+                    {{detail.pgDescription}}
+                </p>
+            </div>
+
+
+            <div style=" text-align:center; width:10rem; border-radius:5px;float:left">
+                <span style="color:var(--color-primary); font-weight:800; font-size:2rem;">₹{{detail.pgCharge}}/Month</span>
+            </div>
+
+            <a href="/pg/{{detail.id}}" target="_blank" style=" text-decoration:none; color:#fff;">
+                <div style="background-color:blue; text-align:center; font-weight:800; width:10rem; border-radius:5px;float:right; margin-top:.8rem;">
+                    Details
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+
+</ul>
+
+{% else %}
+<center>
+    <h1 style="display:block; padding-top:10vh">Nothing To show <br>Try With Different Keyword</h1>
+</center>
+
+{% endif %}
+{% endblock %}
